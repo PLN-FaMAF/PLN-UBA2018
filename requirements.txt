@@ -1,0 +1,6 @@
+flake8
+nose
+docopt
+nltk
+scikit-learn
+-e .  # install our code in editing mode
