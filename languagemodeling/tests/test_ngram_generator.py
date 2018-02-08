@@ -1,7 +1,8 @@
 # https://docs.python.org/3/library/unittest.html
 from unittest import TestCase
 
-from languagemodeling.ngram import NGram, NGramGenerator
+from languagemodeling.ngram import NGram
+from languagemodeling.ngram_generator import NGramGenerator
 
 
 class TestNGramGenerator(TestCase):
@@ -30,7 +31,7 @@ class TestNGramGenerator(TestCase):
             }
         }
 
-        self.assertEqual(dict(generator.probs), probs)
+        self.assertEqual(generator._probs, probs)
 
     def test_init_2gram(self):
         ngram = NGram(2, self.sents)
@@ -59,8 +60,8 @@ class TestNGramGenerator(TestCase):
             ('salmón',): [('.', 1.0)],
         }
 
-        self.assertEqual(dict(generator.probs), probs)
-        self.assertEqual(generator.sorted_probs, sorted_probs)
+        self.assertEqual(generator._probs, probs)
+        self.assertEqual(generator._sorted_probs, sorted_probs)
 
     def test_generate_token(self):
         ngram = NGram(2, self.sents)
