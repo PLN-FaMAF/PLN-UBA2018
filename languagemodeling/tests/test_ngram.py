@@ -1,6 +1,6 @@
 # https://docs.python.org/3/library/unittest.html
 from unittest import TestCase
-from math import log
+from math import log, inf
 
 from languagemodeling.ngram import NGram
 
@@ -118,7 +118,7 @@ class TestNGram(TestCase):
             # 'come', '.' and '</s>' have prob 1/6, the rest have 1/12.
             'el gato come pescado .': 3 * log2(1 / 6.0) + 3 * log2(1 / 12.0),
             'la gata come salmón .': 3 * log2(1 / 6.0) + 3 * log2(1 / 12.0),
-            'el gato come salame .': float('-inf'),  # 'salame' unseen
+            'el gato come salame .': -inf,  # 'salame' unseen
             'la la la': log2(1 / 6.0) + 3 * log2(1 / 12.0),
         }
         for sent, prob in sents.items():
@@ -135,8 +135,8 @@ class TestNGram(TestCase):
             'la gata come salmón .': 2 * log2(0.5),
             'el gato come salmón .': 2 * log2(0.5),
             'la gata come pescado .': 2 * log2(0.5),
-            'el gato come salame .': float('-inf'),  # 'salame' unseen
-            'la la la': float('-inf'),  # 'la' after 'la' unseen
+            'el gato come salame .': -inf,  # 'salame' unseen
+            'la la la': -inf,  # 'la' after 'la' unseen
         }
         for sent, prob in sents.items():
             self.assertAlmostEqual(ngram.sent_log_prob(sent.split()), prob, msg=sent)
