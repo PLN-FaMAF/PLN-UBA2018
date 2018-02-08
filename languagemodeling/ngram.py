@@ -50,13 +50,7 @@ class NGram(LanguageModel):
 
         count = defaultdict(int)
 
-        for sent in sents:
-            # add start and end markers
-            sent = ['<s>'] * (n - 1) + sent + ['</s>']
-            for i in range(len(sent) - n + 1):
-                ngram = tuple(sent[i: i + n])
-                count[ngram] += 1
-                count[ngram[:-1]] += 1
+        # WORK HERE!!
 
         self._count = dict(count)
 
@@ -68,48 +62,23 @@ class NGram(LanguageModel):
         return self._count.get(tokens, 0)
 
     def cond_prob(self, token, prev_tokens=None):
-        n = self._n
-        if not prev_tokens:
-            prev_tokens = ()
-        assert len(prev_tokens) == n - 1
-        assert isinstance(prev_tokens, tuple), prev_tokens
+        """Conditional probability of a token.
 
-        tokens = prev_tokens + (token,)
-        if tokens in self._count:
-            return float(self._count[tokens]) / self._count[prev_tokens]
-        else:
-            return 0.0
+        token -- the token.
+        prev_tokens -- the previous n-1 tokens (optional only if n = 1).
+        """
+        # WORK HERE!!
 
     def sent_prob(self, sent):
         """Probability of a sentence. Warning: subject to underflow problems.
 
         sent -- the sentence as a list of tokens.
         """
-        sent = sent + ['</s>']
-        prob = 1.0
-        prev_tokens = ('<s>',) * (self._n - 1)
-        for token in sent:
-            cond_prob = self.cond_prob(token, prev_tokens)
-            if cond_prob == 0.0:
-                return 0.0
-            prob *= cond_prob
-            prev_tokens = (prev_tokens + (token,))[1:]
-
-        return prob
+        # WORK HERE!!
 
     def sent_log_prob(self, sent):
         """Log-probability of a sentence.
 
         sent -- the sentence as a list of tokens.
         """
-        sent = sent + ['</s>']
-        log_prob = 0.0
-        prev_tokens = ('<s>',) * (self._n - 1)
-        for token in sent:
-            cond_prob = self.cond_prob(token, prev_tokens)
-            if cond_prob == 0.0:
-                return -math.inf
-            log_prob += math.log(cond_prob, 2)
-            prev_tokens = (prev_tokens + (token,))[1:]
-
-        return log_prob
+        # WORK HERE!!
