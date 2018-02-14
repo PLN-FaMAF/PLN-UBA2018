@@ -82,3 +82,39 @@ class NGram(LanguageModel):
         sent -- the sentence as a list of tokens.
         """
         # WORK HERE!!
+
+
+class AddOneNGram(NGram):
+
+    def __init__(self, n, sents):
+        """
+        n -- order of the model.
+        sents -- list of sentences, each one being a list of tokens.
+        """
+        # call superclass to compute counts
+        super().__init__(n, sents)
+
+        # compute vocabulary
+        self._voc = voc = set()
+        # WORK HERE!!
+
+        self._V = len(voc)  # vocabulary size
+
+    def V(self):
+        """Size of the vocabulary.
+        """
+        return self._V
+
+    def cond_prob(self, token, prev_tokens=None):
+        """Conditional probability of a token.
+
+        token -- the token.
+        prev_tokens -- the previous n-1 tokens (optional only if n = 1).
+        """
+        n = self._n
+        if not prev_tokens:
+            # if prev_tokens not given, assume 0-uple:
+            prev_tokens = ()
+        assert len(prev_tokens) == n - 1
+
+        # WORK HERE!!
