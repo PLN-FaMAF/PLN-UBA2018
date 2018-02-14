@@ -29,6 +29,7 @@ class NGramGenerator(object):
         token = self.generate_token(tuple(prev_tokens))
         while token != '</s>':
             # WORK HERE!!
+            pass
 
         return sent
 
