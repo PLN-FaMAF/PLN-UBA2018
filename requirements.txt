@@ -2,6 +2,8 @@ flake8
 nose
 docopt
 nltk
+numpy
+scipy
 scikit-learn
 jupyter
 -e .  # install our code in editing mode
