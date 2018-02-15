@@ -14,7 +14,7 @@ import pickle
 import sys
 from collections import defaultdict
 
-from corpus.ancora import SimpleAncoraCorpusReader
+from ancora import SimpleAncoraCorpusReader
 
 
 def progress(msg, width=None):
