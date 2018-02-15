@@ -31,7 +31,7 @@ Instalación
 
    Para crear y activar nuestro virtualenv::
 
-    mkvirtualenv --system-site-packages --python=/usr/bin/python3 pln
+    mkvirtualenv --python=/usr/bin/python3 pln
 
 3. Bajar el código::
 
