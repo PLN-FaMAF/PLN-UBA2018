@@ -67,6 +67,10 @@ class POSStats:
         """Frequency of tag t."""
         # WORK HERE!!
 
+    def tag_word_dict(self, t):
+        """Dictionary of words and their counts for tag t."""
+        return dict(self._tcount[t])
+
 
 if __name__ == '__main__':
     opts = docopt(__doc__)
@@ -94,7 +98,7 @@ if __name__ == '__main__':
     sorted_tags = sorted(tags, key=lambda t_f: -t_f[1])
     print('\ntag\tfreq\t%\ttop')
     for t, f in sorted_tags[:10]:
-        words = stats._tcount[t].items()
+        words = stats.tag_word_dict(t).items()
         sorted_words = sorted(words, key=lambda w_f: -w_f[1])
         top = [w for w, _ in sorted_words[:5]]
         print('{0}\t{1}\t{2:2.2f}\t({3})'.format(t, f, f * 100 / token_count, ', '.join(top)))
