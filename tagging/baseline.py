@@ -33,9 +33,10 @@ class BadBaselineTagger:
 
 class BaselineTagger:
 
-    def __init__(self, tagged_sents):
+    def __init__(self, tagged_sents, default_tag='nc0s000'):
         """
         tagged_sents -- training sentences, each one being a list of pairs.
+        default_tag -- tag for unknown words.
         """
         # WORK HERE!!
 

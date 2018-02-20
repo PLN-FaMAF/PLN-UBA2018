@@ -15,7 +15,7 @@ class TestBaselineTagger(TestCase):
         ]
 
     def test_tag_word(self):
-        baseline = BaselineTagger(self.tagged_sents)
+        baseline = BaselineTagger(self.tagged_sents, default_tag='N')
 
         for w, t in zip('el gato come pescado .'.split(), 'D N V N P'.split()):
             self.assertEqual(t, baseline.tag_word(w))
@@ -24,7 +24,7 @@ class TestBaselineTagger(TestCase):
             self.assertEqual(t, baseline.tag_word(w))
 
     def test_tag(self):
-        baseline = BaselineTagger(self.tagged_sents)
+        baseline = BaselineTagger(self.tagged_sents, default_tag='N')
 
         y = baseline.tag('el gato come pescado .'.split())
         self.assertEqual(y, 'D N V N P'.split())
@@ -33,7 +33,7 @@ class TestBaselineTagger(TestCase):
         self.assertEqual(y, 'D N V N P'.split())
 
     def test_unknown(self):
-        baseline = BaselineTagger(self.tagged_sents)
+        baseline = BaselineTagger(self.tagged_sents, default_tag='N')
 
         known = {'el', 'gato', 'come', 'pescado', '.', 'la', 'gata', 'salmón'}
         for w in known:
