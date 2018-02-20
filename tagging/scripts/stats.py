@@ -96,7 +96,7 @@ if __name__ == '__main__':
     print('======================')
     tags = [(t, stats.tag_freq(t)) for t in stats.tags()]
     sorted_tags = sorted(tags, key=lambda t_f: -t_f[1])
-    print('\ntag\tfreq\t%\ttop')
+    print('tag\tfreq\t%\ttop')
     for t, f in sorted_tags[:10]:
         words = stats.tag_word_dict(t).items()
         sorted_words = sorted(words, key=lambda w_f: -w_f[1])
