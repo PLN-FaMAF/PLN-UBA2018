@@ -42,7 +42,8 @@ if __name__ == '__main__':
     # tag
     hits, total = 0, 0
     unk_hits, unk_total = 0, 0
-    hits_dict = defaultdict(lambda: defaultdict(int))
+    error_count = defaultdict(lambda: defaultdict(int))
+    error_sents = defaultdict(lambda: defaultdict(set))
     n = len(sents)
     for i, sent in enumerate(sents):
         word_sent, gold_tag_sent = zip(*sent)
@@ -69,7 +70,10 @@ if __name__ == '__main__':
 
         # confusion matrix
         for t1, t2 in zip(model_tag_sent, gold_tag_sent):
-            hits_dict[t2][t1] += 1
+            error_count[t2][t1] += 1
+            if t2 != t1:
+                # save index of the sentence for error analysis
+                error_sents[t2][t1].add(i)
 
         format_str = '{:3.1f}% ({:2.2f}% / {:2.2f}% / {:2.2f}%)'
         progress(format_str.format(float(i) * 100 / n, acc, k_acc, unk_acc))
@@ -89,12 +93,12 @@ if __name__ == '__main__':
         print('')
 
         # basic check
-        assert total == sum(sum(d.values()) for d in hits_dict.values())
+        assert total == sum(sum(d.values()) for d in error_count.values())
 
         # select most frequent tags
-        sorted_hits_dict = sorted(hits_dict.keys(),
-                                  key=lambda t: -sum(hits_dict[t].values()))
-        entries = sorted_hits_dict[:10]
+        sorted_error_count = sorted(error_count.keys(),
+                                  key=lambda t: -sum(error_count[t].values()))
+        entries = sorted_error_count[:10]
 
         # print table header
         print('g \ m', end='')
@@ -106,8 +110,8 @@ if __name__ == '__main__':
         for t1 in entries:
             print('{}\t'.format(t1), end='')
             for t2 in entries:
-                if hits_dict[t1][t2] > 0:
-                    acc = hits_dict[t1][t2] / total
+                if error_count[t1][t2] > 0:
+                    acc = error_count[t1][t2] / total
                     print('{:2.2f}\t'.format(acc * 100), end='')
                 else:
                     print('-\t'.format(acc * 100), end='')
