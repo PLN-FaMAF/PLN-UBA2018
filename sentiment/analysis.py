@@ -20,3 +20,17 @@ def print_maxent_features(vect, clf, n=5):
 		print('\t{} ({})'.format(
 			' '.join([features[j] for j in A[i, -5:]]),
 			C[i, A[i, -n:]]))
+
+
+def print_feature_weights_for_item(vect, clf, x):
+	"""
+	Print active features and their weight for a specific item.
+
+	vect -- text vectorizer (count or tf-idf)
+	clf -- LogisticRegression classifier
+	"""
+	features = vect.get_feature_names()
+	x2 = vect.transform([x])
+	col = x2.tocoo().col
+	for i in col:
+		print(features[i], clf.coef_[:,i])
